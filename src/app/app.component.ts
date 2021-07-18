@@ -17,7 +17,6 @@ export class AppComponent {
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
-      console.log(process.env);
       console.log('Run in electron');
       console.log('Electron ipcRenderer', this.electronService.ipcRenderer);
       console.log('NodeJS childProcess', this.electronService.childProcess);

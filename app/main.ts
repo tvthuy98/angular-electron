@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, ipcMain, dialog } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
@@ -17,10 +17,9 @@ function createWindow(): BrowserWindow {
 
   // Create the browser window.
   win = new BrowserWindow({
-    x: 0,
-    y: 0,
-    width: size.width,
-    height: size.height,
+    width: size.width * 2 / 3,
+    height: size.height * 2 / 3,
+    center: true,
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
@@ -28,8 +27,17 @@ function createWindow(): BrowserWindow {
       enableRemoteModule : true // true if you want to run 2e2 test  with Spectron or use remote module in renderer context (ie. Angular)
     },
   });
-  
 
+  ipcMain.handle('select-file', async (evt, args) => {
+    const selectedFile = await dialog.showOpenDialog({ properties: args });
+    const fileContent = fs.readFileSync(selectedFile.filePaths[0]);
+
+    return {
+      ...selectedFile,
+      fileContent: fileContent.toString('utf-8')
+    }
+  });
+  
   if (serve) {
     win.webContents.openDevTools();
     require('electron-reload')(__dirname, {

@@ -1,0 +1,40 @@
+<div class="card text-center">
+  <div class="card-header">
+    <h3>Task manager</h3>
+    <div class="col-12">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="keyword" />
+        <div class="input-group-append">
+          <button (click)="searchTasksByName(keyword)" class="btn btn-success" type="button">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body table-responsive" style="height: 55vh;">
+    <table class="table">
+      <thead>
+        <th>Name</th>
+        <th>PID</th>
+        <th>CPU (%)</th>
+        <th>Action</th>
+      </thead>
+      <tbody *ngFor="let task of tasks">
+        <tr>
+          <td>{{ task.name }}</td>
+          <td>{{ task.pid }}</td>
+          <td>{{ task.cpu }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              (click)="killTask(task.pid)"
+            >
+              End task
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer text-muted">{{ message }}</div>
+</div>

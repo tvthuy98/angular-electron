@@ -1,0 +1,40 @@
+<div class="card text-center">
+    <div class="card-header">
+      <h3>Env variable manager</h3>
+      <div class="col-12">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="env name..." [(ngModel)]="newEvnName" />
+          <input type="text" class="form-control" placeholder="env value..." [(ngModel)]="newEnvValue" />
+          <div class="input-group-append">
+            <button (click)="setEnvVariable(newEvnName, newEnvValue)" class="btn btn-success" type="button">Add/Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body table-responsive" style="height: 55vh;">
+      <table class="table">
+        <thead>
+          <th>Name</th>
+          <th>Value</th>
+          <th>Action</th>
+        </thead>
+        <tbody *ngFor="let env of envVars">
+          <tr>
+            <td>{{ env.envName }}</td>
+            <td>{{ env.envValue }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                (click)="setEnvVariable(env.envName, '')"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer text-muted">{{ message }}</div>
+  </div>
+  
